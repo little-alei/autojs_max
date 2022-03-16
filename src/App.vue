@@ -2,7 +2,7 @@
  * @Author: 抠脚本人
  * @QQ: 742374184
  * @Date: 2022-03-13 13:47:44
- * @LastEditTime: 2022-03-15 23:08:31
+ * @LastEditTime: 2022-03-16 19:18:34
  * @Description: 
  * 灵感来之不易,积累创造奇迹
 -->
@@ -23,9 +23,6 @@
 				<ScriptTask></ScriptTask>
 			</van-tab>
 		</van-tabs>
-		<!-- <md-button class="md-fab md-primary md-fixed md-fab-bottom-right" teleport="#app">
-			<md-icon>add</md-icon>
-		</md-button> -->
 		<vue-fab ref="mFab" :hidden="hide" :scrollAutoHide="openAction" autoHideDirection="down" mainBtnColor="#3599DB">
 			<fab-item @clickItem="addConfig" :idx="0" title="add" icon="add" />
 			<fab-item @clickItem="addConfig" :idx="1" title="https" icon="https" />
@@ -35,6 +32,7 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 import AppHeader from "./components/AppHeader.vue";
 import ScriptHome from "./components/ScriptHome.vue";
 import ScriptSample from "./components/ScriptSample.vue";
@@ -51,9 +49,11 @@ export default {
 	},
 	methods: {
 		addConfig() {
+			Toast("点击悬浮窗子选项");
+			/* this.$refs.mFab.onOffFab(true);
 			setTimeout(() => {
 				this.hide = true;
-			}, 200);
+			}, 1000); */
 		},
 		changeFab() {
 			if (this.active == 0) {
@@ -63,7 +63,9 @@ export default {
 			} else {
 				this.$refs.mFab.onOffFab(false);
 				this.openAction = false;
-				this.hide = true;
+				setTimeout(() => {
+					this.hide = true;
+				}, 500);
 			}
 		},
 	},
@@ -71,6 +73,9 @@ export default {
 		"$store.state.PublicAttribute.show"(newValue) {
 			if (this.active == 0) this.$refs.mFab.onOffFab(!newValue);
 		},
+	},
+	mounted() {
+		this.expand = this.$refs.mFab.active;
 	},
 	components: {
 		AppHeader,
